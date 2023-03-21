@@ -1,31 +1,26 @@
-import streamlit as st
 import openai
+import streamlit as st
 
+# Initialize OpenAI API with your API key
+openai.api_key = "YOUR_API_KEY_HERE"
 
-"""
-# Welcome to Streamlit!
-Jean Code to open a Chat GPT Prompt
-"""
-
-
-openai.api_key = "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"
-
-def ask_chatgpt(prompt):
+# Define a function to generate a response from GPT-3
+def generate_response(prompt):
     response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
+        engine="davinci", prompt=prompt, max_tokens=1024, n=1,stop=None, temperature=0.7,
     )
-    message = response.choices[0].text
-    return message.strip()
 
+    message = response.choices[0].text.strip()
+    return message
 
-def app():
-    st.title("ChatGPT")
-    user_input = st.text_input("You: ")
-    if user_input:
-        response = ask_chatgpt(user_input)
-        st.text_area("ChatGPT:", value=response, height=200)
+# Create a Streamlit app
+st.title("Chat with GPT-3")
+
+# Add a text input field for the user to enter their message
+user_input = st.text_input("Enter your message here:")
+
+# When the user submits their message, generate a response from GPT-3 and display it
+if st.button("Send"):
+    prompt = f"User: {user_input}\nBot:"
+    bot_response = generate_response(prompt)
+    st.text_area("Bot's response:", value=bot_response, height=200, max_chars=None, key=None)
