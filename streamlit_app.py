@@ -1,10 +1,10 @@
-import openai
 import streamlit as st
 
 # Initialize OpenAI API with your API key
+import openai
 openai.api_key = "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"
 
-# Define a function to generate a response from GPT-3
+# Define a function to generate a response from GPT-3 y montar
 def generate_response(prompt):
     response = openai.Completion.create(
         engine="davinci", prompt=prompt, max_tokens=1024, n=1,stop=None, temperature=0.7,
